@@ -1,0 +1,19 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    haml (3.0.21)
+    json (1.4.6)
+    rack (1.1.0)
+    require_all (1.1.0)
+    sinatra (1.0)
+      rack (>= 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  haml
+  json
+  rack (= 1.1.0)
+  require_all (= 1.1.0)
+  sinatra (= 1.0)
