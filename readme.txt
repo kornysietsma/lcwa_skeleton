@@ -1,5 +1,8 @@
 Loosely Coupled Web App Skeleton
-- this is how I generally start small webapps
+This is how I generally start small webapps - with a basic structure and layout, nothing too complex.
+I've done this 4 or 5 times lately, each time growing the structure a bit, and in the interests of
+avoiding repetition, I thought I'd save the definitive app skeleton for me (and others!) to use as a starting point.
+
 - the goals are:
 * ease of development
 * ease of comprehension
