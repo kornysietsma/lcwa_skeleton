@@ -54,8 +54,6 @@ The basic architecture, front-to-back, is:
 - it also lets you run without a database at all for simple apps
 
 ## TODO
-- convert this file to markdown
-- add an open-source license
 - upload to github
 - add a "getting started" section for building from scratch (especially installing coffeescript!)
 - add rake tasks to compile coffee/scss manually, and to stop/start watch servers
