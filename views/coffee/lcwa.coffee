@@ -20,6 +20,7 @@ class Lcwa
   load_controller: ->
     lcwa = this
     $.sammy( ->
+      @use Sammy.Template
       @element_selector = '#output'
       @get '#/', (context) ->
         lcwa.show_main(context)
@@ -41,7 +42,7 @@ class Lcwa
     @controller.log "Error: #{response}"
 
   show_main: (context) ->
-    context.partial(@views['main'],{item: @model[0]})
+    context.partial($("#views section.main"),@model)
 
 $( ->
      lcwa =  new Lcwa()

@@ -28,6 +28,7 @@
     var lcwa;
     lcwa = this;
     return $.sammy(function() {
+      this.use(Sammy.Template);
       this.element_selector = '#output';
       return this.get('#/', function(context) {
         return lcwa.show_main(context);
@@ -53,9 +54,7 @@
     return this.controller.log("Error: " + (response));
   };
   Lcwa.prototype.show_main = function(context) {
-    return context.partial(this.views['main'], {
-      item: this.model[0]
-    });
+    return context.partial($("#views section.main"), this.model);
   };
   $(function() {
     var lcwa;
