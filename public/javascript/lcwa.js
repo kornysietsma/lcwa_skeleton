@@ -1,10 +1,11 @@
 (function() {
   var Lcwa;
   Lcwa = function() {
-    var that;
-    that = this;
+    var app;
     $('#output').append("<p>hello from coffee-script</p>");
     this.get_sample_json();
+    app = this.link_sammy();
+    app.run('#/');
     return this;
   };
   Lcwa.prototype.get_sample_json = function() {
@@ -16,6 +17,15 @@
         _result.push($('#output').append("<p>" + (line) + "</p>"));
       }
       return _result;
+    });
+  };
+  Lcwa.prototype.link_sammy = function() {
+    return $.sammy(function() {
+      this.element_selector = '#output';
+      return this.get('#/', function(context) {
+        context.log("in sammy-land!");
+        return $('#output').append("<p>sammy was here</p>");
+      });
     });
   };
   $(function() {

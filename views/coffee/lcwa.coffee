@@ -1,9 +1,9 @@
 class Lcwa
   constructor: () ->
-    that = this  # not a big fan of the fat arrow
     $('#output').append("<p>hello from coffee-script</p>")
-
     @get_sample_json()
+    app = @link_sammy()
+    app.run '#/'
 
   get_sample_json: ->
     $.getJSON("/sample.json",
@@ -11,6 +11,14 @@ class Lcwa
                 (response) ->
                    for line in response.data
                      $('#output').append "<p>#{line}</p>"
+    )
+
+  link_sammy: ->
+    $.sammy( ->
+      @element_selector = '#output'
+      @get '#/', (context) ->
+        context.log "in sammy-land!"
+        $('#output').append "<p>sammy was here</p>"
     )
 
 $( ->
