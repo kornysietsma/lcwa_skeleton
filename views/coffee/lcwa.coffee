@@ -1,25 +1,47 @@
 class Lcwa
   constructor: () ->
-    $('#output').append("<p>hello from coffee-script</p>")
-    @get_sample_json()
-    app = @link_sammy()
-    app.run '#/'
+    @model = {}
+    @views = @load_views()
+    @controller = @load_controller()
+    @load_data( => @controller.run('#/') )
 
-  get_sample_json: ->
-    $.getJSON("/sample.json",
+  load_data: (next_action) ->
+    lcwa = this
+    $.getJSON("/data.json",
                 null,
                 (response) ->
-                   for line in response.data
-                     $('#output').append "<p>#{line}</p>"
+                    if response.status == "ok"
+                        lcwa.update_model(response.data)
+                    else
+                        lcwa.show_errors(response)
+                    next_action()
     )
 
-  link_sammy: ->
+  load_controller: ->
+    lcwa = this
     $.sammy( ->
       @element_selector = '#output'
       @get '#/', (context) ->
-        context.log "in sammy-land!"
-        $('#output').append "<p>sammy was here</p>"
+        lcwa.show_main(context)
     )
+
+  load_views: ->
+    results = {}
+    $("#views section").each (index, element) ->
+        $el = $(element)
+        name = $el.attr("class")  # we know there is only a single class, so this is safe
+        results[name] = element
+    return results
+
+  update_model: (data) ->
+    @model = data
+
+  show_errors: (response) ->
+    alert "errors occurred - see log"
+    @controller.log "Error: #{response}"
+
+  show_main: (context) ->
+    context.partial(@views['main'],{item: @model[0]})
 
 $( ->
      lcwa =  new Lcwa()

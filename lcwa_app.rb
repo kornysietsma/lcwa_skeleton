@@ -30,9 +30,12 @@ class LcwaApp < Sinatra::Base
     redirect "/index.html"
   end
 
-  get '/sample.json' do
+  get '/data.json' do
     content_type 'application/json', :charset => 'utf-8'
-    {:data => %w(hello from the server)}.to_json
+    {:status => "ok", :data => [
+            {:title => "thing one", :body => "body one"},
+            {:title => "thing two", :body => "body two"}
+    ]}.to_json
   end
 
 end

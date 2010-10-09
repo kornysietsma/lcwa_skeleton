@@ -1,31 +1,60 @@
 (function() {
   var Lcwa;
+  var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  };
   Lcwa = function() {
-    var app;
-    $('#output').append("<p>hello from coffee-script</p>");
-    this.get_sample_json();
-    app = this.link_sammy();
-    app.run('#/');
+    this.model = {};
+    this.views = this.load_views();
+    this.controller = this.load_controller();
+    this.load_data(__bind(function() {
+      return this.controller.run('#/');
+    }, this));
     return this;
   };
-  Lcwa.prototype.get_sample_json = function() {
-    return $.getJSON("/sample.json", null, function(response) {
-      var _i, _len, _ref, _result, line;
-      _result = []; _ref = response.data;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        line = _ref[_i];
-        _result.push($('#output').append("<p>" + (line) + "</p>"));
+  Lcwa.prototype.load_data = function(next_action) {
+    var lcwa;
+    lcwa = this;
+    return $.getJSON("/data.json", null, function(response) {
+      if (response.status === "ok") {
+        lcwa.update_model(response.data);
+      } else {
+        lcwa.show_errors(response);
       }
-      return _result;
+      return next_action();
     });
   };
-  Lcwa.prototype.link_sammy = function() {
+  Lcwa.prototype.load_controller = function() {
+    var lcwa;
+    lcwa = this;
     return $.sammy(function() {
       this.element_selector = '#output';
       return this.get('#/', function(context) {
-        context.log("in sammy-land!");
-        return $('#output').append("<p>sammy was here</p>");
+        return lcwa.show_main(context);
       });
+    });
+  };
+  Lcwa.prototype.load_views = function() {
+    var results;
+    results = {};
+    $("#views section").each(function(index, element) {
+      var $el, name;
+      $el = $(element);
+      name = $el.attr("class");
+      return (results[name] = element);
+    });
+    return results;
+  };
+  Lcwa.prototype.update_model = function(data) {
+    return (this.model = data);
+  };
+  Lcwa.prototype.show_errors = function(response) {
+    alert("errors occurred - see log");
+    return this.controller.log("Error: " + (response));
+  };
+  Lcwa.prototype.show_main = function(context) {
+    return context.partial(this.views['main'], {
+      item: this.model[0]
     });
   };
   $(function() {
