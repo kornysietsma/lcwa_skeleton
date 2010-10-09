@@ -54,18 +54,16 @@ The basic architecture, front-to-back, is:
 - it also lets you run without a database at all for simple apps
 
 ## TODO
-- upload to github
-- add a "getting started" section for building from scratch (especially installing coffeescript!)
-- add rake tasks to compile coffee/scss manually, and to stop/start watch servers
+- basic sammy sample code
 - work out how to do client-side templating
-- think about precompiling html from template languages - see how bonsai works, or other similar options.
-- actually implement offline application behaviour [http://diveintohtml5.org/offline.html]
-- more testing:
+- (more) testing:
 -- rspec server-side unit testing
 -- javascript client-side unit testing
 -- javascript client/server integration testing
 -- selenium and cucumber for acceptance-style BDD testing
-
-## Notes
-- Sass is handled by rack not by sinatra - see http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#rackrailsmerb_plugin
-- CoffeeScript might need to be optional - I like it, but it doesn't fit nicely in the ruby/gems world
+- set up a domain model server-side (without database for now)
+- set up client-side caching in browser store
+- add a "getting started" section for building from scratch (especially installing coffeescript!)
+- add rake tasks to compile coffee/scss manually, and to stop/start watch servers
+- think about precompiling html from template languages - see how bonsai works, or other similar options.
+- actually implement offline application behaviour [http://diveintohtml5.org/offline.html]
