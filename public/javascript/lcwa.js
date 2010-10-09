@@ -30,6 +30,7 @@
     return $.sammy(function() {
       this.use(Sammy.Template);
       this.element_selector = '#output';
+      this.next_engine = 'template';
       return this.get('#/', function(context) {
         return lcwa.show_main(context);
       });
@@ -54,7 +55,7 @@
     return this.controller.log("Error: " + (response));
   };
   Lcwa.prototype.show_main = function(context) {
-    return context.partial($("#views section.main"), this.model);
+    return context.partial($("#test"), this.model[0]);
   };
   $(function() {
     var lcwa;
