@@ -24,6 +24,11 @@
       background: #eee;
       @include rounded(8px);
       padding: 8px;
+      li {
+        margin-left: 12px;
+        padding-bottom: 4px;
+      }
+
     }
   }
 }

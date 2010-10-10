@@ -25,17 +25,19 @@ work reliably</p></section>
   <section id="output">
   </section>
 </section>
-<section id="views" style="display:none;">
-    <section class="main" data-engine="template">
-<script type="text/html" id="test" data-engine="template">
-    <p><strong><%=title%></strong>
-        <p><%=body%><%=5%></p>
+<script type="text/html" id="all-view" data-engine="mustache">
+  <ul>
+    {{#items}}
+    <li>
+      <p><strong>{{title}}</strong></p>
+      <p>{{body}}</p>
+    </li>
+    {{/items}}
+  </ul>
 </script>
-    </section>
-</section>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="javascript/sammy.js"></script>
-<script src="javascript/sammy.template.js"></script>
+<script src="javascript/sammy.mustache.js"></script>
   <script src="javascript/lcwa.js"></script>
     </body>
 </html>

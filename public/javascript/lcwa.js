@@ -5,7 +5,6 @@
   };
   Lcwa = function() {
     this.model = {};
-    this.views = this.load_views();
     this.controller = this.load_controller();
     this.load_data(__bind(function() {
       return this.controller.run('#/');
@@ -15,12 +14,8 @@
   Lcwa.prototype.load_data = function(next_action) {
     var lcwa;
     lcwa = this;
-    return $.getJSON("/data.json", null, function(response) {
-      if (response.status === "ok") {
-        lcwa.update_model(response.data);
-      } else {
-        lcwa.show_errors(response);
-      }
+    return $.getJSON("/data.json", null, function(data) {
+      lcwa.update_model(data);
       return next_action();
     });
   };
@@ -28,34 +23,18 @@
     var lcwa;
     lcwa = this;
     return $.sammy(function() {
-      this.use(Sammy.Template);
+      this.use(Sammy.Mustache);
       this.element_selector = '#output';
-      this.next_engine = 'template';
       return this.get('#/', function(context) {
-        return lcwa.show_main(context);
+        return lcwa.show_all(context);
       });
     });
-  };
-  Lcwa.prototype.load_views = function() {
-    var results;
-    results = {};
-    $("#views section").each(function(index, element) {
-      var $el, name;
-      $el = $(element);
-      name = $el.attr("class");
-      return (results[name] = element);
-    });
-    return results;
   };
   Lcwa.prototype.update_model = function(data) {
     return (this.model = data);
   };
-  Lcwa.prototype.show_errors = function(response) {
-    alert("errors occurred - see log");
-    return this.controller.log("Error: " + (response));
-  };
-  Lcwa.prototype.show_main = function(context) {
-    return context.partial($("#test"), this.model[0]);
+  Lcwa.prototype.show_all = function(context) {
+    return context.partial($("#all-view"), this.model);
   };
   $(function() {
     var lcwa;
