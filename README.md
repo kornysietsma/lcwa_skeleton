@@ -54,8 +54,8 @@ The basic architecture, front-to-back, is:
 - it also lets you run without a database at all for simple apps
 
 ## TODO
-- basic sammy sample code
-- work out how to do client-side templating
+- fix watch_all.sh - seems to currently be running not compiling coffee scripts
+- do more than one view in sammy - show some logic!
 - (more) testing:
 -- rspec server-side unit testing
 -- javascript client-side unit testing
