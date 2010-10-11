@@ -1,32 +1,37 @@
 class Lcwa
-  constructor: () ->
-    @model = {}
-    @controller = @load_controller()
-    @load_data( => @controller.run('#/') )
+  constructor: ->
+    @items = {}
+    @load_contexts()
+    @load_items()
 
-  load_data: (next_action) ->
+  load_items: ->
     lcwa = this
-    $.getJSON("/data.json",
+    $.getJSON("/items.json",
                 null,
-                (data) ->
-                    lcwa.update_model(data)
-                    next_action()
+                (items) ->
+                    lcwa.update_items(items)
     )
 
-  load_controller: ->
+  update_items: (items) ->
+    @items = items
+    @contexts.items.refresh()
+
+  load_contexts: ->
     lcwa = this
-    $.sammy( ->
-      @use Sammy.Mustache
-      @element_selector = '#output'
-      @get '#/', (context) ->
-        lcwa.show_all(context)
-    )
+    @contexts =
+        items:
+            $.sammy( ->
+                @use Sammy.Mustache
+                @element_selector = '#items'
+                @get '#/', (context) ->
+                    lcwa.show_all(context)
+            )
 
-  update_model: (data) ->
-    @model = data
+    for name, context of @contexts
+      context.run()
 
   show_all: (context) ->
-    context.partial($("#all-view"),@model)
+    context.partial($("#all-view"),@items)
 
 $( ->
      lcwa =  new Lcwa()

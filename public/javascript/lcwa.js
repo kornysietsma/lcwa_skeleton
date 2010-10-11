@@ -1,40 +1,45 @@
 (function() {
   var Lcwa;
-  var __bind = function(func, context) {
-    return function(){ return func.apply(context, arguments); };
-  };
+  var __hasProp = Object.prototype.hasOwnProperty;
   Lcwa = function() {
-    this.model = {};
-    this.controller = this.load_controller();
-    this.load_data(__bind(function() {
-      return this.controller.run('#/');
-    }, this));
+    this.items = {};
+    this.load_contexts();
+    this.load_items();
     return this;
   };
-  Lcwa.prototype.load_data = function(next_action) {
+  Lcwa.prototype.load_items = function() {
     var lcwa;
     lcwa = this;
-    return $.getJSON("/data.json", null, function(data) {
-      lcwa.update_model(data);
-      return next_action();
+    return $.getJSON("/items.json", null, function(items) {
+      return lcwa.update_items(items);
     });
   };
-  Lcwa.prototype.load_controller = function() {
-    var lcwa;
+  Lcwa.prototype.update_items = function(items) {
+    this.items = items;
+    return this.contexts.items.refresh();
+  };
+  Lcwa.prototype.load_contexts = function() {
+    var _ref, _result, context, lcwa, name;
     lcwa = this;
-    return $.sammy(function() {
-      this.use(Sammy.Mustache);
-      this.element_selector = '#output';
-      return this.get('#/', function(context) {
-        return lcwa.show_all(context);
-      });
-    });
-  };
-  Lcwa.prototype.update_model = function(data) {
-    return (this.model = data);
+    this.contexts = {
+      items: $.sammy(function() {
+        this.use(Sammy.Mustache);
+        this.element_selector = '#items';
+        return this.get('#/', function(context) {
+          return lcwa.show_all(context);
+        });
+      })
+    };
+    _result = []; _ref = this.contexts;
+    for (name in _ref) {
+      if (!__hasProp.call(_ref, name)) continue;
+      context = _ref[name];
+      _result.push(context.run());
+    }
+    return _result;
   };
   Lcwa.prototype.show_all = function(context) {
-    return context.partial($("#all-view"), this.model);
+    return context.partial($("#all-view"), this.items);
   };
   $(function() {
     var lcwa;

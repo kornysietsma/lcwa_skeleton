@@ -30,7 +30,7 @@ class LcwaApp < Sinatra::Base
     redirect "/index.html"
   end
 
-  get '/data.json' do
+  get '/items.json' do
     content_type 'application/json', :charset => 'utf-8'
     {
             :items => [

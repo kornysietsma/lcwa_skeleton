@@ -3,5 +3,5 @@
 #  you could do this manually in separate terminals,
 #  or kick this off from rake...
 sass --watch views/scss:public/stylesheets > logs/sass.log &
-coffee -c --watch views/coffee/ -o public/javascript > logs/coffee.log &
+coffee -o public/javascript --watch views/coffee/ > logs/coffee.log &
 
