@@ -1,39 +1,45 @@
 class Lcwa
   constructor: ->
-    @items = {}
-    @load_contexts()
+    @items = []
+    @load_context()
     @load_items()
 
   load_items: ->
     lcwa = this
     $.getJSON("/items.json",
                 null,
-                (items) ->
-                    lcwa.update_items(items)
+                (data) ->
+                    lcwa.update_items(data.items)
     )
 
   update_items: (items) ->
     @items = items
-    @contexts.items.refresh()
+    for ix in [0...items.length]
+      items[ix].index = ix
+    @context.refresh()
 
-  load_contexts: ->
+  load_context: ->
     lcwa = this
-    @contexts =
-        items:
-            $.sammy( ->
-                @use Sammy.Mustache
-                @element_selector = '#items'
-                @get '#/', (context) ->
-                    lcwa.show_all(context)
-            )
+    @context =
+      $.sammy( ->
+         @use Sammy.Mustache
+         @element_selector = '#items'
+         @get '#/', (context) ->
+            lcwa.show_all(context)
+         @get '#/items/:index', (context) ->
+            lcwa.show_item(context.params['index'],context)
+      )
 
-    for name, context of @contexts
-      context.run()
+    @context.run()
 
   show_all: (context) ->
-    context.partial($("#all-view"),@items)
+    context.partial($("#all-view"),{items:@items})
+
+  show_item: (index, context) ->
+    item = @items[index]
+    context.partial($("#item-view"),item)
 
 $( ->
      lcwa =  new Lcwa()
-     window.the_app = lcwa # really just to aid debugging
+     window.LCWA = lcwa # really just to aid debugging
 )

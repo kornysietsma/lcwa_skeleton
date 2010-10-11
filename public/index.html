@@ -26,16 +26,21 @@ work reliably</p></section>
       <p>(no items loaded yet...)</p>
   </section>
 </section>
-<!-- ----------------------- templates, javascript, and the like ----------------- -->
+
 <script type="text/html" id="all-view" data-engine="mustache">
   <ul>
     {{#items}}
     <li>
-      <p><strong>{{title}}</strong></p>
+      <p><a href="#/items/{{index}}"<strong>{{title}}</strong></a></p>
       <p>{{body}}</p>
     </li>
     {{/items}}
   </ul>
+</script>
+<script type="text/html" id="item-view" data-engine="mustache">
+  <p><strong>{{title}}</strong></p>
+  <p>{{body}}</p>
+  <p><a href="#/">(back to list)</a></p>
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="javascript/sammy.js"></script>
