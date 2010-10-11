@@ -54,16 +54,16 @@ The basic architecture, front-to-back, is:
 - it also lets you run without a database at all for simple apps
 
 ## TODO
-- fix watch_all.sh - seems to currently be running not compiling coffee scripts
-- do more than one view in sammy - show some logic!
+- error handling (i.e. for bad item id)
+- set up a domain model server-side (without database for now)
+- tweak the domain from the client (just to show how it's done)
+- add a "getting started" section for building from scratch (especially installing coffeescript!)
 - (more) testing:
 -- rspec server-side unit testing
 -- javascript client-side unit testing
--- javascript client/server integration testing
+-- javascript client/server integration testing (try jasmine?)
 -- selenium and cucumber for acceptance-style BDD testing
-- set up a domain model server-side (without database for now)
 - set up client-side caching in browser store
-- add a "getting started" section for building from scratch (especially installing coffeescript!)
 - add rake tasks to compile coffee/scss manually, and to stop/start watch servers
 - think about precompiling html from template languages - see how bonsai works, or other similar options.
 - actually implement offline application behaviour [http://diveintohtml5.org/offline.html]

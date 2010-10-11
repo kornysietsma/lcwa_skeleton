@@ -9,13 +9,11 @@ class Lcwa
     $.getJSON("/items.json",
                 null,
                 (data) ->
-                    lcwa.update_items(data.items)
+                    lcwa.update_items(data)
     )
 
   update_items: (items) ->
     @items = items
-    for ix in [0...items.length]
-      items[ix].index = ix
     @context.refresh()
 
   load_context: ->
@@ -30,10 +28,13 @@ class Lcwa
             lcwa.show_item(context.params['index'],context)
       )
 
-    @context.run()
+    @context.run('#/')
 
   show_all: (context) ->
-    context.partial($("#all-view"),{items:@items})
+    # @items is a hash, mustache wants an array:
+    item_list = { index: key, title:data.title, body:data.body } for key, data of @items
+    context.log item_list
+    context.partial($("#all-view"),{items: item_list})
 
   show_item: (index, context) ->
     item = @items[index]

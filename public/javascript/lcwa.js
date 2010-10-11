@@ -1,5 +1,6 @@
 (function() {
   var Lcwa;
+  var __hasProp = Object.prototype.hasOwnProperty;
   Lcwa = function() {
     this.items = [];
     this.load_context();
@@ -10,16 +11,11 @@
     var lcwa;
     lcwa = this;
     return $.getJSON("/items.json", null, function(data) {
-      return lcwa.update_items(data.items);
+      return lcwa.update_items(data);
     });
   };
   Lcwa.prototype.update_items = function(items) {
-    var _ref, ix;
     this.items = items;
-    _ref = items.length;
-    for (ix = 0; (0 <= _ref ? ix < _ref : ix > _ref); (0 <= _ref ? ix += 1 : ix -= 1)) {
-      items[ix].index = ix;
-    }
     return this.context.refresh();
   };
   Lcwa.prototype.load_context = function() {
@@ -35,11 +31,26 @@
         return lcwa.show_item(context.params['index'], context);
       });
     });
-    return this.context.run();
+    return this.context.run('#/');
   };
   Lcwa.prototype.show_all = function(context) {
+    var _ref, _result, data, item_list, key;
+    item_list = (function() {
+      _result = []; _ref = this.items;
+      for (key in _ref) {
+        if (!__hasProp.call(_ref, key)) continue;
+        data = _ref[key];
+        _result.push({
+          index: key,
+          title: data.title,
+          body: data.body
+        });
+      }
+      return _result;
+    }).call(this);
+    context.log(item_list);
     return context.partial($("#all-view"), {
-      items: this.items
+      items: item_list
     });
   };
   Lcwa.prototype.show_item = function(index, context) {

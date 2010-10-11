@@ -33,10 +33,8 @@ class LcwaApp < Sinatra::Base
   get '/items.json' do
     content_type 'application/json', :charset => 'utf-8'
     {
-            :items => [
-                    {:title => "thing one", :body => "body one"},
-                    {:title => "thing two", :body => "body two"}
-            ]
+       "abc" => {:title => "thing one", :body => "body one"},
+       "def" => {:title => "thing two", :body => "body two"}
     }.to_json
   end
 
