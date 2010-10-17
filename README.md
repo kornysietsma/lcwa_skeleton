@@ -8,11 +8,16 @@ Naming this sort of thing is hard - I chose "loosely coupled" as that's the main
 most webapp samples - I don't want html generated on the server and manipulated on a client a-la Rails - I
 want to use the server to handle data, the client to render the data, and keep them relatively separate.
 
+See also Yet Another Mongo Browser (yamb) which I built to drive-out the skeleton features - it is likely to
+deviate from the basic skeleton fairly quickly, but is another point of reference.
+ (not yet on github, will be there soon)
+
 ## Goals
 * ease of development
 * ease of comprehension
 * ease of testing
 * loose coupling, so I can change clients and servers easily
+* clear delineation of state management (see below)
 * tend towards static html to make offline apps easier in the future
 * not caring awfully about "progressive enhancement" - real apps need
 to care, I'm mostly assuming a modern browser with javascript enabled
@@ -21,6 +26,17 @@ from coffeescript.
 * use the power of the shiny new web technologies available
 * respect YAGNI - don't spend effort supporting things you might need some day. If you are building an enterprise app
     that definitely needs the stuff below, don't use this skeleton, use Rails or the like.
+
+## State Management
+There are lots of places a web app can store state - here's my philosophy:
+(in rough order from permanent to transient)
+* long-term storage and anything security-critical should live on the server:
+** global permanent state is in a server-side database. For some apps, this won't be needed!
+** financial stuff, private stuff (except for temporary private stuff) and external APIs need (usually) to come from the server also
+* transient state should live on the client:
+** application state can live in Javascript objects and/or the DOM - as long as you stay on one page, you can get all the convenience of a fat client in a browser.
+** key aspects of the current view should be tracked by the hash part of the browser URL - this is bookmarkable, lets you go forward and back, and is generally nifty
+** medium-term user state can also live in the browser - in html5 browser storage - allowing the entire app to work offline.
 
 ## What isn't handled
 * old browsers - ie8 should be OK (though not heavily tested), the rest are out of scope
@@ -47,11 +63,20 @@ from coffeescript.
 ## Architecture
 The basic architecture, front-to-back, is:
 - web pages are static html
-- the view layer is built using sammy.js and jquery at run-time
+- the view layer is built using jquery plus several plugins:
+-- jquery.bbq is used to manage url hash state
+-- mustache.js is used for view templates
+-- probably more things to come here
 - anything dynamic needed from the server is fetched asynchronously via json-over-http calls
 - for future offline application building, try to handle the situation where no server is available gracefully
 - i.e. cache data in browser storage. This also makes offline apps a possiblity. See [http://diveintohtml5.org/storage.html]
 - it also lets you run without a database at all for simple apps
+
+### What about sammy.js?
+I started this using sammy.js - it's a neat framework - but I'm not sure the Sinatra-style REST url is really suited
+to single-page javascript apps.  I very quickly got to the point where I wanted to track multiple independant bits
+of state at once - which gets pretty ugly when everything is stored in #/foo/123/bar/456/baz/987 format. JQuery.bbq
+isn't as full-featured, doesn't do as much for you, and isn't as easy to jump into - but it solves this rather better.
 
 ## TODO
 - error handling (i.e. for bad item id)
