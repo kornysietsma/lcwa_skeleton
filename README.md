@@ -81,6 +81,7 @@ isn't as full-featured, doesn't do as much for you, and isn't as easy to jump in
 ## TODO
 - error handling (i.e. for bad item id)
 - set up a domain model server-side (without database for now)
+-- could just put some data in the config file
 - tweak the domain from the client (just to show how it's done)
 - add a "getting started" section for building from scratch (especially installing coffeescript!)
 - (more) testing:

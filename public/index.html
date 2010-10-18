@@ -27,21 +27,29 @@ work reliably</p></section>
   </section>
 </section>
 
-<script type="text/html" id="all-view" data-engine="mustache">
+<script type="text/html" id="all-view">
   <ul>
     {{#items}}
     <li>
-      <p><a href="#/items/{{index}}"><strong>{{title}}</strong></a></p>
+      <p><a href="#" data-link="{{linkParam}}"><strong>{{title}}</strong></a></p>
       <p>{{body}}</p>
     </li>
     {{/items}}
   </ul>
 </script>
-<script type="text/html" id="item-view" data-engine="mustache">
+<script type="text/html" id="item-view">
   <p><strong>{{title}}</strong></p>
   <p>{{body}}</p>
-  <p><a href="#/">(back to list)</a></p>
+  <p><a href="#" data-link="{{linkParam}}">(back to list)</a></p>
 </script>
+<script type="text/html" id="loading-view">
+  <p>{{message}}</p>
+</script>
+<script type="text/html" id="error-view">
+    <header><h1>An error occurred</h1></header>
+    <p>{{message}}</p>
+</script>
+
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
 <script src="javascript/jquery-1.4.2.js"></script>
 <script src="javascript/ba-debug.js"></script>

@@ -30,13 +30,32 @@ class LcwaApp < Sinatra::Base
     redirect "/index.html"
   end
 
-  get '/items.json' do
-    content_type 'application/json', :charset => 'utf-8'
-    {
-       "abc" => {:title => "thing one", :body => "body one"},
-       "def" => {:title => "thing two", :body => "body two"}
-    }.to_json
+  def with_error_handler(context)
+    begin
+      yield
+    rescue Exception => e
+      return {
+        :success => false,
+        :payload => {
+          :message => "#{e.class} : #{e.message} #{context}"
+        }
+      }.to_json
+    end
   end
 
+  get '/items.json' do
+    content_type 'application/json', :charset => 'utf-8'
+    with_error_handler("accessing all items") do
+      raise "random error!" if rand(3) == 0
+      sleep 2 # so we can see the loading messages!
+      return {
+        :success => true,
+        :payload => {
+          "abc" => {:title => "thing one", :body => "body one"},
+          "def" => {:title => "thing two", :body => "body two"}
+        }
+      }.to_json
+    end
+  end
 end
 
