@@ -1,3 +1,4 @@
 {
-    "app_name": "Loosely Coupled Web App Skeleton"
+    "db_file": "tmp/db.json",
+    "initial_db": "config/initial_db.json"
 }

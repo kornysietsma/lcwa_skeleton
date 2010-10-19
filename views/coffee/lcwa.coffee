@@ -1,7 +1,8 @@
 class Lcwa
   constructor: ->
-    @items = null
-    @outputElement = '#items'
+    @widgets = null
+    @widget_details = {}
+    @outputElement = '#output'
 
     $(window).hashchange (event) => @hashchange(event)
     @bindStateLinks()
@@ -12,12 +13,12 @@ class Lcwa
     $(@outputElement).html(view)
 
   hashchange: (event) ->
-    item = event.getState 'item'
-    if item
-      debug.log "changing state based on hash - item now #{item}"
-      @show_item(item)
+    widget = event.getState 'widget'
+    if widget
+      debug.log "changing state based on hash - widget now #{widget}"
+      @show_widget(widget)
     else
-      debug.log "changing state to show all items"
+      debug.log "changing state to show all widgets"
       @show_all()
 
   bindStateLinks: ->
@@ -36,42 +37,55 @@ class Lcwa
     result.linkParam = $.param(linkObj)
     result
 
-  show_item: (item) ->
+  show_widget: (widget) ->
     that = this
-    if @items == null
-      @renderView("#loading-view",{message:"loading items"})
-      @load_items_and( -> that.show_item(item))
+    if !(@widget_details[widget])
+      @renderView("#loading-view",{message:"loading widget"})
+      @load_widget_and(widget, -> that.show_widget(widget))
     else
-      newState = @with_link(@items[item],{item:''})  # link back to top!
-      @renderView("#item-view",newState)
+      debug.log "showing widget"
+      newState = @with_link(@widget_details[widget],{widget:''})  # link back to top!
+      @renderView("#widget-view",newState)
 
   show_all: ->
     that = this
-    if @items == null
-      @renderView("#loading-view",{message:"loading items"})
-      @load_items_and( -> that.show_all())
+    if @widgets == null
+      debug.log "loading widgets"
+      @renderView("#loading-view",{message:"loading widgets"})
+      @load_widgets_and( -> that.show_all())
     else
-      # @items is a hash, mustache wants an array - and we want to add links:
-      item_list = { index: key, title:data.title, body:data.body, linkParam: $.param({item:key}) } for key, data of @items
-      @renderView("#all-view",{items: item_list})
+      debug.log "showing widgets"
+      # build new list including link param
+      widget_list = { name:widget.name, linkParam: $.param({widget:widget["id"]}) } for widget in @widgets
+      @renderView("#all-view",{widgets: widget_list})
 
-  load_items_and: (callback) ->
+  load_json_and: (url, errorView, onSuccess, nextAction) ->
     that = this
     $.ajax
-      url: "/items.json"
+      url: url
       dataType: 'json'
       data: null
       success: (data) ->
         if data.success
-          that.items = data.payload
-          callback()
+          onSuccess(data)
+          nextAction()
         else
-          that.renderView("#error-view",data.payload)
+          that.renderView(errorView,data.payload)
       error: (request, textStatus, error) ->
-        that.renderView("#error-view", that.formatErrorState(textStatus,error))
+        that.renderView(errorView, that.formatErrorState(textStatus,error))
 
   formatErrorState: (textStatus, error) ->
     { message: "#{textStatus}: #{error}" }
+
+  load_widgets_and: (nextAction) ->
+    that = this
+    successFn = (data) -> that.widgets = data.payload
+    @load_json_and("/widgets.json","#error-view", successFn, nextAction)
+
+  load_widget_and: (widget, nextAction) ->
+    that = this
+    successFn = (data) -> that.widget_details[widget] = data.payload
+    @load_json_and("/widget/#{widget}.json","#error-view", successFn, nextAction)
 
 $( ->
   # expose a namespace for external use

@@ -22,24 +22,24 @@ work reliably</p></section>
   <header>
     <h1>Loosely Coupled Web App Sample</h1>
   </header>
-  <section id="items">
-      <p>(no items loaded yet...)</p>
+  <section id="output">
+      <p>(nothing loaded yet...)</p>
   </section>
 </section>
 
 <script type="text/html" id="all-view">
   <ul>
-    {{#items}}
-    <li>
-      <p><a href="#" data-link="{{linkParam}}"><strong>{{title}}</strong></a></p>
-      <p>{{body}}</p>
-    </li>
-    {{/items}}
+    {{#widgets}}
+    <li><a href="#" data-link="{{linkParam}}">{{name}}</a></li>
+    {{/widgets}}
   </ul>
 </script>
-<script type="text/html" id="item-view">
-  <p><strong>{{title}}</strong></p>
-  <p>{{body}}</p>
+<script type="text/html" id="widget-view">
+  <p><strong>{{name}}</strong></p>
+  <ul>
+  {{#sprockets}}
+    <li>{{name}} - size {{size}}</li>
+  {{/sprockets}}
   <p><a href="#" data-link="{{linkParam}}">(back to list)</a></p>
 </script>
 <script type="text/html" id="loading-view">

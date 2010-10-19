@@ -1,0 +1,17 @@
+##TODO
+- tweak the domain from the client (just to show how it's done) - easier now we have a db!
+- add a "getting started" section for building from scratch (especially installing coffeescript!)
+- (more) testing:
+-- tests for FakeDb (really should have TDDd this - don't tell anyone!)
+-- rspec server-side unit testing
+-- javascript client-side unit testing
+-- javascript client/server integration testing (try jasmine?)
+-- selenium and cucumber for acceptance-style BDD testing
+- set up client-side caching in browser store (need a library if we're not using sammy!)
+- add rake tasks to compile coffee/scss manually, and to stop/start watch servers
+- think about precompiling html from template languages - see how bonsai works, or other similar options.
+- actually implement offline application behaviour [http://diveintohtml5.org/offline.html]
+- think about jquery mobile version
+- better link management - be nice if you could right-click a "#" link and open in a new window!
+-- but that means with 2 widgets, changing the state of one should change the # links for the other...
+-- might be worth leaving the 'data-link' attribute there, using it to rebuild the href on state change.

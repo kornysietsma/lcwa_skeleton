@@ -4,8 +4,9 @@
     return function(){ return func.apply(context, arguments); };
   }, __hasProp = Object.prototype.hasOwnProperty;
   Lcwa = function() {
-    this.items = null;
-    this.outputElement = '#items';
+    this.widgets = null;
+    this.widget_details = {};
+    this.outputElement = '#output';
     $(window).hashchange(__bind(function(event) {
       return this.hashchange(event);
     }, this));
@@ -19,13 +20,13 @@
     return $(this.outputElement).html(view);
   };
   Lcwa.prototype.hashchange = function(event) {
-    var item;
-    item = event.getState('item');
-    if (item) {
-      debug.log("changing state based on hash - item now " + (item));
-      return this.show_item(item);
+    var widget;
+    widget = event.getState('widget');
+    if (widget) {
+      debug.log("changing state based on hash - widget now " + (widget));
+      return this.show_widget(widget);
     } else {
-      debug.log("changing state to show all items");
+      debug.log("changing state to show all widgets");
       return this.show_all();
     }
   };
@@ -53,72 +54,72 @@
     result.linkParam = $.param(linkObj);
     return result;
   };
-  Lcwa.prototype.show_item = function(item) {
+  Lcwa.prototype.show_widget = function(widget) {
     var newState, that;
     that = this;
-    if (this.items === null) {
+    if (!(this.widget_details[widget])) {
       this.renderView("#loading-view", {
-        message: "loading items"
+        message: "loading widget"
       });
-      return this.load_items_and(function() {
-        return that.show_item(item);
+      return this.load_widget_and(widget, function() {
+        return that.show_widget(widget);
       });
     } else {
-      newState = this.with_link(this.items[item], {
-        item: ''
+      debug.log("showing widget");
+      newState = this.with_link(this.widget_details[widget], {
+        widget: ''
       });
-      return this.renderView("#item-view", newState);
+      return this.renderView("#widget-view", newState);
     }
   };
   Lcwa.prototype.show_all = function() {
-    var _ref, _result, data, item_list, key, that;
+    var _i, _len, _ref, _result, that, widget, widget_list;
     that = this;
-    if (this.items === null) {
+    if (this.widgets === null) {
+      debug.log("loading widgets");
       this.renderView("#loading-view", {
-        message: "loading items"
+        message: "loading widgets"
       });
-      return this.load_items_and(function() {
+      return this.load_widgets_and(function() {
         return that.show_all();
       });
     } else {
-      item_list = (function() {
-        _result = []; _ref = this.items;
-        for (key in _ref) {
-          if (!__hasProp.call(_ref, key)) continue;
-          data = _ref[key];
+      debug.log("showing widgets");
+      widget_list = (function() {
+        _result = []; _ref = this.widgets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          widget = _ref[_i];
           _result.push({
-            index: key,
-            title: data.title,
-            body: data.body,
+            name: widget.name,
             linkParam: $.param({
-              item: key
+              widget: widget["id"]
             })
           });
         }
         return _result;
       }).call(this);
       return this.renderView("#all-view", {
-        items: item_list
+        widgets: widget_list
       });
     }
   };
-  Lcwa.prototype.load_items_and = function(callback) {
+  Lcwa.prototype.load_json_and = function(url, errorView, onSuccess, nextAction) {
     var that;
     that = this;
     return $.ajax({
-      url: "/items.json",
+      url: url,
       dataType: 'json',
       data: null,
       success: function(data) {
         if (data.success) {
-          that.items = data.payload;
-          return callback();
+          onSuccess(data);
+          return nextAction();
         } else {
-          return that.renderView("#error-view", data.payload);
+          return that.renderView(errorView, data.payload);
         }
       },
       error: function(request, textStatus, error) {
-        return that.renderView("#error-view", that.formatErrorState(textStatus, error));
+        return that.renderView(errorView, that.formatErrorState(textStatus, error));
       }
     });
   };
@@ -126,6 +127,22 @@
     return {
       message: ("" + (textStatus) + ": " + (error))
     };
+  };
+  Lcwa.prototype.load_widgets_and = function(nextAction) {
+    var successFn, that;
+    that = this;
+    successFn = function(data) {
+      return (that.widgets = data.payload);
+    };
+    return this.load_json_and("/widgets.json", "#error-view", successFn, nextAction);
+  };
+  Lcwa.prototype.load_widget_and = function(widget, nextAction) {
+    var successFn, that;
+    that = this;
+    successFn = function(data) {
+      return (that.widget_details[widget] = data.payload);
+    };
+    return this.load_json_and("/widget/" + (widget) + ".json", "#error-view", successFn, nextAction);
   };
   $(function() {
     return (window.LCWA = {

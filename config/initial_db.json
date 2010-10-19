@@ -1,0 +1,30 @@
+{
+    "widgets" : {
+        "1" : {
+            "name" : "Foo",
+            "sprockets" : {
+                "1" : {
+                    "name" : "Bar",
+                    "size" : 100
+                },
+                "2" : {
+                    "name" : "Baz",
+                    "size" : 200
+                }
+            }
+        },
+        "2" : {
+            "name" : "Qux",
+            "sprockets" : {
+                "1" : {
+                    "name" : "quux",
+                    "size" : 250
+                },
+                "2" : {
+                    "name" : "corge",
+                    "size" : 375
+                }
+            }
+        }
+    }
+}

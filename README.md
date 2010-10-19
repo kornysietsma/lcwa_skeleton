@@ -79,17 +79,4 @@ of state at once - which gets pretty ugly when everything is stored in #/foo/123
 isn't as full-featured, doesn't do as much for you, and isn't as easy to jump into - but it solves this rather better.
 
 ## TODO
-- error handling (i.e. for bad item id)
-- set up a domain model server-side (without database for now)
--- could just put some data in the config file
-- tweak the domain from the client (just to show how it's done)
-- add a "getting started" section for building from scratch (especially installing coffeescript!)
-- (more) testing:
--- rspec server-side unit testing
--- javascript client-side unit testing
--- javascript client/server integration testing (try jasmine?)
--- selenium and cucumber for acceptance-style BDD testing
-- set up client-side caching in browser store
-- add rake tasks to compile coffee/scss manually, and to stop/start watch servers
-- think about precompiling html from template languages - see how bonsai works, or other similar options.
-- actually implement offline application behaviour [http://diveintohtml5.org/offline.html]
+see separate TODO.md file
