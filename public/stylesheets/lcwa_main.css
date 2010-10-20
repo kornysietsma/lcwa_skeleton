@@ -136,3 +136,8 @@ input, select {
     #home .main > section li {
       margin-left: 12px;
       padding-bottom: 4px; }
+
+#working {
+  display: none;
+  position: absolute;
+  margin-left: -55px; }

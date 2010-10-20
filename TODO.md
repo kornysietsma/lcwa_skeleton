@@ -1,5 +1,6 @@
 ##TODO
 - tweak the domain from the client (just to show how it's done) - easier now we have a db!
+- make the working cog animate for more than 10 seconds (can we loop indefinitely?)
 - add a "getting started" section for building from scratch (especially installing coffeescript!)
 - (more) testing:
 -- tests for FakeDb (really should have TDDd this - don't tell anyone!)
