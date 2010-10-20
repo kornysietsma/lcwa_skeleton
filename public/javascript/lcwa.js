@@ -161,16 +161,17 @@
       return that.hide_working_icon(this);
     });
   };
-  Lcwa.prototype.show_icon = function(paper, name) {
-    return paper.path(this.icons[name]);
+  Lcwa.prototype.show_icon = function(paper, name, width) {
+    var scale;
+    scale = width / 32;
+    return paper.path(this.icons[name]).scale(scale, scale, 0, 0);
   };
   Lcwa.prototype.show_working_icon = function(element) {
-    var domElement, paper, scale, width;
+    var domElement, paper, width;
     domElement = $(element).show()[0];
     width = 50;
-    scale = width / 32;
     paper = Raphael(domElement, width, width);
-    return this.show_icon(paper, "progress").scale(scale, scale, 0, 0).attr({
+    return this.show_icon(paper, "progress", width).attr({
       fill: "#eee",
       stroke: "none"
     }).animate({

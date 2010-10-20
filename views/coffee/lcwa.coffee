@@ -96,15 +96,15 @@ class Lcwa
     that = this
     $("#working").ajaxStart( -> that.show_working_icon(this) ).ajaxStop( -> that.hide_working_icon(this) )
 
-  show_icon: (paper,name) ->
-    paper.path(@icons[name])
+  show_icon: (paper, name, width) ->
+    scale = width/32
+    paper.path(@icons[name]).scale(scale,scale,0,0)
 
   show_working_icon: (element) ->
     domElement = $(element).show()[0]
     width = 50
-    scale = width/32
     paper = Raphael(domElement, width, width)
-    @show_icon(paper, "progress").scale(scale,scale,0,0).attr({fill: "#eee", stroke: "none"}).animate({rotation:"360"},10000)
+    @show_icon(paper, "progress", width).attr({fill: "#eee", stroke: "none"}).animate({rotation:"360"},10000)
 
   hide_working_icon: (element) ->
     $(element).empty().hide()
