@@ -8,7 +8,10 @@ Naming this sort of thing is hard - I chose "loosely coupled" as that's the main
 most webapp samples - I don't want html generated on the server and manipulated on a client a-la Rails - I
 want to use the server to handle data, the client to render the data, and keep them relatively separate.
 
-See also Yet Another Mongo Browser (yamb) which I built to drive-out the skeleton features - it is likely to
+I'm also focused on new browsers - supporting what is loosely termed "html5 and css3" - older browsers may work, but they'll
+get a big red warning message.  If I'm writing a small webapp, I can reasonably assume my audience have a new browser.
+
+See also [Yet Another Mongo Browser (yamb)](http://github.com/kornysietsma/yamb) which I built to drive-out the skeleton features - it is likely to
 deviate from the basic skeleton fairly quickly, but is another point of reference.
  (not yet on github, will be there soon)
 
@@ -17,6 +20,11 @@ deviate from the basic skeleton fairly quickly, but is another point of referenc
 * ease of comprehension
 * ease of testing
 * loose coupling, so I can change clients and servers easily
+* avoid complex frameworks!  There are lots of frameworks that offer some or all of what I'm doing, but:
+** they tend to dominate your app, so you can't switch easily
+** which framework will "win" is a bit of a lucky dip - don't want to be tied to an unused framework
+** they get in the way of understanding how the technology works
+** they add a pile of effort to support old browsers, I'm happy to ignore them
 * clear delineation of state management (see below)
 * tend towards static html to make offline apps easier in the future
 * not caring awfully about "progressive enhancement" - real apps need
