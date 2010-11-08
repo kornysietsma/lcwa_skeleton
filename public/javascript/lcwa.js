@@ -155,7 +155,7 @@
   Lcwa.prototype.setup_ajax_indicator = function() {
     var that;
     that = this;
-    return $("#working").ajaxStart(function() {
+    return $("#ajax-status").ajaxStart(function() {
       return that.show_working_icon(this);
     }).ajaxStop(function() {
       return that.hide_working_icon(this);

@@ -137,7 +137,7 @@ input, select {
       margin-left: 12px;
       padding-bottom: 4px; }
 
-#working {
+#ajax-status {
   display: none;
   position: absolute;
   margin-left: -55px; }
