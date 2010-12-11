@@ -1,4 +1,8 @@
 ##TODO
+- grab useful bits from korny.info site - css tweaks, font-face sample
+- grab 400 handling from yamb
+- get all templates at start (like yamb)
+- replace ostruct with Hashie
 - tweak the domain from the client (just to show how it's done) - easier now we have a db!
 - make the working cog animate for more than 10 seconds (can we loop indefinitely?)
 - pull out some functionality into more classes - icons for example

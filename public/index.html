@@ -28,14 +28,14 @@ work reliably</p></section>
   </section>
 </section>
 
-<script type="text/html" id="all-view">
+<script type="text/html" class="view-template" data-name="all">
   <ul>
     {{#widgets}}
     <li><a href="#" data-link="{{linkParam}}">{{name}}</a></li>
     {{/widgets}}
   </ul>
 </script>
-<script type="text/html" id="widget-view">
+<script type="text/html" class="view-template" data-name="widget">
   <p><strong>{{name}}</strong></p>
   <ul>
   {{#sprockets}}
@@ -44,16 +44,26 @@ work reliably</p></section>
   </ul>
   <p><a href="#" data-link="{{linkParam}}">(back to list)</a></p>
 </script>
-<script type="text/html" id="loading-view">
+<script type="text/html" class="view-template" data-name="loading">
   <p>{{message}}</p>
 </script>
-<script type="text/html" id="error-view">
-    <header><h1>An error occurred</h1></header>
-    <p>{{message}}</p>
+<script type="text/html" class="view-template" data-name="errors">
+    <header><h1>Errors:</h1></header>
+    <ul>
+      {{#errors}}
+        <li>
+          <h3>{{title}}</h3>
+          <p>{{timestamp}}</p>
+          {{#text}}
+          <p>{{.}}</p>
+          {{/text}}
+        </li>
+      {{/errors}}
+    </ul>
 </script>
-
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
-<script src="javascript/jquery-1.4.2.js"></script>
+<script src="javascript/jquery-1.4.4.js"></script>
+<script src="javascript/jquery.simplemodal-1.4.1.js"></script>
+<script src="javascript/underscore.js"></script>
 <script src="javascript/ba-debug.js"></script>
 <script src="javascript/jquery.ba-bbq.js"></script>
 <script src="javascript/mustache.js"></script>
