@@ -63,7 +63,9 @@
         });
       } else {
         debug.log("showing widget");
-        newState = this.with_link(_.clone(this.widget_details[widget]), {
+        widget = _.clone(this.widget_details[widget]);
+        widget.sprockets = _.values(widget.sprockets);
+        newState = this.with_link(widget, {
           widget: ''
         });
         return this.renderView("#output", "widget", newState);
@@ -86,7 +88,7 @@
           return that.with_link({
             name: widget.name
           }, {
-            widget: widget["id"]
+            widget: widget["_id"]
           });
         });
         return this.renderView("#output", "all", {

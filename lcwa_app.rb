@@ -26,8 +26,12 @@ class LcwaApp < Sinatra::Base
     set :config, config_data
   end
 
-  def db
-    @db ||= FakeDb.new(LcwaApp.config.db_file, LcwaApp.config.initial_db)
+  before do
+    Mongomatic.db = Mongo::Connection.new(LcwaApp.config.mongo_connection).db(LcwaApp.config.mongo_db)
+    $stderr.puts "connected to #{LcwaApp.config.mongo_db}"
+    if Widget.count == 0
+      Widget.populate_sample_data(LcwaApp.config.initial_widgets)
+    end
   end
 
   get '/' do
@@ -52,7 +56,7 @@ class LcwaApp < Sinatra::Base
     content_type 'application/json', :charset => 'utf-8'
     with_error_handler("accessing widgets") do
       sleep 2 # so we can see the loading status
-      return db.all_widgets.to_json
+      return Widget.all.collect {|w| w.to_hash}.to_json
     end
   end
 
@@ -61,11 +65,11 @@ class LcwaApp < Sinatra::Base
     widget_id = params[:id]
     with_error_handler("accessing widget #{widget_id}") do
       sleep 1 # so we can see loading status
-      widget = db.widget(widget_id, :with_sprockets => true)
+      widget = Widget.find_one(:_id => widget_id)
       if widget.nil?
         json_error 400, "accessing widgets", "No widget with id #{widget_id}"
       end
-      return widget.to_json
+      return widget.to_hash.to_json
     end
   end
 end

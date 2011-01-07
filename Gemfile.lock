@@ -1,9 +1,18 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    activesupport (3.0.1)
+    bson (1.1.2)
+    bson_ext (1.1.2)
     haml (3.0.21)
     hashie (0.4.0)
     json (1.4.6)
+    mongo (1.1)
+      bson (>= 1.0.5)
+    mongomatic (0.6.1)
+      activesupport (>= 2.3.5)
+      bson (~> 1.1)
+      mongo (~> 1.1)
     rack (1.1.0)
     require_all (1.1.0)
     sinatra (1.0)
@@ -13,9 +22,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson
+  bson_ext
   haml
   hashie
   json
+  mongo
+  mongomatic
   rack (= 1.1.0)
   require_all (= 1.1.0)
   sinatra (= 1.0)

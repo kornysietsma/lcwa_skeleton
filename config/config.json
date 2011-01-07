@@ -1,4 +1,5 @@
 {
-    "db_file": "tmp/db.json",
-    "initial_db": "config/initial_db.json"
+    "mongo_host": "localhost",
+    "mongo_db": "lcwa_dev",
+    "initial_widgets": "config/initial_db.json"
 }

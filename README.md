@@ -67,6 +67,8 @@ There are lots of places a web app can store state - here's my philosophy:
 * Sinatra is used for gluing everything together
 * Bundler for handling Ruby gem dependencies
 * Web pages are static html and resources (may add option one day to build from templates at compile-time)
+* I'm using MongoDb via MongMatic as a database - initially I used the file system, but it's actually simpler to use a database
+    it shouldn't be too hard to substitute any other database - this is just a sample. And MongoMatic is the simplest driver!
 
 ## Architecture
 The basic architecture, front-to-back, is:

@@ -1,7 +1,7 @@
 ##TODO
-- replace FakeDb with Mongodb (probably MongoMatic) - probably simpler overall
 - remove ajax wait cursor stuff - it's not 100% reliable it seems, and raphael is distracting to new users
 - tweak the domain from the client (just to show how it's done) - easier now we have a db!
+- add sinatra/reloader for dev mode
 - add a "getting started" section for building from scratch (especially installing coffeescript!)
 - (more) testing:
 -- rspec server-side unit testing

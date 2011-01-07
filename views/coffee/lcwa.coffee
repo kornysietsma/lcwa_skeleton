@@ -49,7 +49,10 @@ class Lcwa
       @load_widget_and(widget, -> that.show_widget(widget))
     else
       debug.log "showing widget"
-      newState = @with_link(_.clone(@widget_details[widget]),{widget:''})  # link back to top!
+      # widget.sprockets is a map, but the view wants a list - convert them:
+      widget = _.clone(@widget_details[widget])
+      widget.sprockets = _.values(widget.sprockets)  # should really sort them as well
+      newState = @with_link(widget,{widget:''})  # link back to top!
       @renderView("#output", "widget", newState)
 
   show_all: ->
@@ -61,7 +64,7 @@ class Lcwa
     else
       debug.log "showing widgets"
       # build new list including link param
-      widget_list = _.map(@widgets, (widget) -> that.with_link({ name:widget.name} , {widget:widget["id"]} ))
+      widget_list = _.map(@widgets, (widget) -> that.with_link({name:widget.name} , {widget:widget["_id"]} ))
       @renderView("#output", "all",{widgets: widget_list})
 
   load_widgets_and: (nextAction) ->
