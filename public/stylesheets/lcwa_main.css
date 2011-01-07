@@ -183,6 +183,5 @@ input, select {
       padding-bottom: 4px; }
 
 #ajax-status {
-  display: none;
   position: absolute;
-  margin-left: -55px; }
+  margin-left: -100px; }
