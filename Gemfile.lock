@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     haml (3.0.21)
+    hashie (0.4.0)
     json (1.4.6)
     rack (1.1.0)
     require_all (1.1.0)
@@ -13,6 +14,7 @@ PLATFORMS
 
 DEPENDENCIES
   haml
+  hashie
   json
   rack (= 1.1.0)
   require_all (= 1.1.0)

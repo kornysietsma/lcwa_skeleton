@@ -2,7 +2,6 @@ require 'sinatra/base'
 require "bundler"
 Bundler.setup(:default)
 Bundler.require(:default)
-require 'ostruct'
 
 PRJ_DIR = File.absolute_path(File.dirname(__FILE__))
 require_all Dir.glob("#{File.join(PRJ_DIR, "lib", "*.rb")}")
@@ -16,15 +15,15 @@ class LcwaApp < Sinatra::Base
 
   configure do
     config_file = File.join(PRJ_DIR, "config", "config.json")
-    config_data = {}
+    config_data = Hashie::Mash.new
     if File.exists?(config_file)
-      config_data = JSON.parse(File.read(config_file))
+      config_data.deep_update JSON.parse(File.read(config_file))
     end
     ext_config = File.join(PRJ_DIR, "config", "config_#{LcwaApp.environment}.json")
     if File.exists?(ext_config)
-      config_data.merge! JSON.parse(File.read(ext_config))
+      config_data.deep_update JSON.parse(File.read(ext_config))
     end
-    set :config, OpenStruct.build_recursive(config_data)
+    set :config, config_data
   end
 
   def db

@@ -1,7 +1,6 @@
 ##TODO
 - replace FakeDb with Mongodb (probably MongoMatic) - probably simpler overall
 - remove ajax wait cursor stuff - it's not 100% reliable it seems, and raphael is distracting to new users
-- replace ostruct with Hashie
 - tweak the domain from the client (just to show how it's done) - easier now we have a db!
 - add a "getting started" section for building from scratch (especially installing coffeescript!)
 - (more) testing:
