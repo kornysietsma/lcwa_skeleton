@@ -1,3 +1,5 @@
+**ARCHIVED** this is so out of date - it was nice at the time but this predates all sorts of nice new framework, and was before I realised the benefits of progressing enhancement...
+
 # Loosely Coupled Web App Skeleton
 
 This is how I generally start small webapps - with a basic structure and file layout, nothing too complex.
